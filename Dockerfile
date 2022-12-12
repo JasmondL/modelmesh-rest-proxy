@@ -15,9 +15,9 @@
 ###############################################################################
 # Stage 1: Create the develop, test, and build environment
 ###############################################################################
-FROM  registry.access.redhat.com/ubi8/ubi-minimal:8.4 AS develop
+FROM  registry.access.redhat.com/ubi8/ubi-minimal:8.7 AS develop
 
-ARG GOLANG_VERSION=1.16.6
+ARG GOLANG_VERSION=1.19.3
 ARG PROTOC_VERSION=3.14.0
 
 USER root
@@ -55,8 +55,8 @@ RUN set -eux; \
 
 # Install go protoc plugins
 ENV PATH /root/go/bin:$PATH
-RUN go get google.golang.org/protobuf/cmd/protoc-gen-go \
-           google.golang.org/grpc/cmd/protoc-gen-go-grpc
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28.1 && \
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2.0
 
 WORKDIR /opt/app
 
