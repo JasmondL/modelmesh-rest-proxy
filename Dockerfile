@@ -19,6 +19,8 @@ FROM  registry.access.redhat.com/ubi8/ubi-minimal:8.7 AS develop
 
 ARG GOLANG_VERSION=1.18.9
 ARG PROTOC_VERSION=21.12
+ARG PROTOC_GEN_GO_VERSION=1.28.1
+ARG PROTOC_GEN_GO_GRPC=1.2.0
 
 USER root
 
@@ -57,8 +59,8 @@ COPY go.mod go.sum ./
 
 # Install go protoc plugins
 ENV PATH /root/go/bin:$PATH
-RUN go get google.golang.org/protobuf/cmd/protoc-gen-go \
-           google.golang.org/grpc/cmd/protoc-gen-go-grpc
+RUN go get google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION} \
+           google.golang.org/grpc/cmd/protoc-gen-go-grpc@${PROTOC_GEN_GO_GRPC}
 
 WORKDIR /opt/app
 
